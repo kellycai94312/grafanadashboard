@@ -12,3 +12,4 @@ export { default as AppWebsiteVisits } from './AppWebsiteVisits';
 export { default as AppWeeklySales } from './AppWeeklySales';
 export { default as Grafana } from './Grafana';
 export { default as Graphite } from './Graphite';
+export { default as Vlcvideo } from './Vlcvideo';
