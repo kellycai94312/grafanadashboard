@@ -10,9 +10,24 @@ import { Grafana, Machineside, Middlebox, Vlcvideo } from '../components/_dashbo
 export default function MachineDashboard() {
   // const [count, setCount] = useState(0);
   // const [graphite, setGraphite] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [machineName, setMachineName] = useState('');
-  const [machineSerial, setMachineSerial] = useState('');
+  const [searchParams] = useSearchParams();
+  const [machineName] = useState(searchParams.get("machine_name") || "Missing");
+  const [machineSerial] = useState(searchParams.get("machine_serial") || "Missing");
+
+  /*
+  This function will replace placeholders in a string with values from the .env file `process.env` and query parameters like `machineSerial`.
+  eg injectConfigVars("This machine is called {{machineName}}")
+  returns "This machine is called XYZ"
+  */
+  const injectConfigVars = (str) => {
+    const configValues = {
+      ...process.env,
+      machineName,
+      machineSerial,
+    };
+    return str.replace(/\{{(.*?)}}/g, (_,g)=> configValues[g] || "undefined");
+  }
+
   /*
    const fetchGraphiteData = () =>
 //     fetch(`${process.env.REACT_APP_GRAPHITE_URL_DEV}`)
@@ -28,16 +43,6 @@ export default function MachineDashboard() {
 //         setGraphite((graphite) => txt);
 //       });
 */
-  const getParams = () => {
-    setMachineName(searchParams.get('machine_name'));
-    setMachineSerial(searchParams.get('machine_serial'));
-
-    if (machineName === '') setMachineName('01');
-    if (machineSerial === '') setMachineName('APA-AU-1231-34-X');
-  };
-  useEffect(() => {
-    getParams();
-  }, []);
 
   return (
     <Page title="Machine Dashboard">
@@ -50,14 +55,16 @@ export default function MachineDashboard() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={6}>
             <Machineside
-              packingspeed={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&from=now-1h&to=now&panelId=5&refresh=5s&kiosk&var-machine_serial=${machineSerial}`}
-              accumulationfill={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&from=now-1h&to=now&panelId=6&refresh=5s&kiosk&var-machine_serial=${machineSerial}`}
+              packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_A_DEV)}
+              packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_A_DEV)}
+              accumulationfill={injectConfigVars(process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Machineside
-              packingspeed={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&from=now-1h&to=now&panelId=7&refresh=5s&kiosk&var-machine_serial=${machineSerial}`}
-              accumulationfill={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&from=now-1h&to=now&panelId=8&refresh=5s&kiosk&var-machine_serial=${machineSerial}`}
+              packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_B_DEV)}
+              packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_B_DEV)}
+              accumulationfill={injectConfigVars(process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_DEV)}
             />
           </Grid>
         </Grid>
@@ -83,32 +90,32 @@ export default function MachineDashboard() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=14&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_A_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=15&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_A_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=13&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_A_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=17&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_B_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=2&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_B_DEV)}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Grafana
-              url={`${process.env.REACT_APP_GRAFANA_URL_DEV}graphs/d-solo/21aYM4xnz/machine-dashboard?orgId=1&kiosk=&refresh=5s&panelId=16&var-machine_serial=${machineSerial}`}
+              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_B_DEV)}
             />
           </Grid>
         </Grid>

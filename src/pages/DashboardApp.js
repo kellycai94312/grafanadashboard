@@ -35,14 +35,14 @@ export default function DashboardApp() {
     setStartTime(from.format('LLL'));
     setEndTime(to.format('LLL'));
     setPanelone(
-      `${process.env.REACT_APP_GRAFANA_URL_DEV}d-solo/21aYM4xnz/new-dashboard?orgId=1&refresh=5s&panelId=4`
+      `${process.env.REACT_APP_GRAFANA_URL_DEV}/d-solo/21aYM4xnz/new-dashboard?orgId=1&refresh=5s&panelId=4`
     );
     setPaneltwo(
-      `${process.env.REACT_APP_GRAFANA_URL_DEV}d-solo/21aYM4xnz/new-dashboard?orgId=1&refresh=5s&panelId=2`
+      `${process.env.REACT_APP_GRAFANA_URL_DEV}/d-solo/21aYM4xnz/new-dashboard?orgId=1&refresh=5s&panelId=2`
     );
     setVlcurl(`${process.env.REACT_APP_VLC_URL_DEV}`);
-    // `${process.env.REACT_APP_GRAFANA_URL_DEV}d-solo/21aYM4xnz/new-dashboard?orgId=1&from=${from}&to=${to}&panelId=4`
-    // `${process.env.REACT_APP_GRAFANA_URL_DEV}d-solo/21aYM4xnz/new-dashboard?orgId=1&from=${from}&to=${to}&panelId=2`
+    // `${process.env.REACT_APP_GRAFANA_URL_DEV}/d-solo/21aYM4xnz/new-dashboard?orgId=1&from=${from}&to=${to}&panelId=4`
+    // `${process.env.REACT_APP_GRAFANA_URL_DEV}/d-solo/21aYM4xnz/new-dashboard?orgId=1&from=${from}&to=${to}&panelId=2`
   };
   useEffect(() => {
     panelsUrl();
