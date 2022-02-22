@@ -13,3 +13,5 @@ export { default as AppWeeklySales } from './AppWeeklySales';
 export { default as Grafana } from './Grafana';
 export { default as Graphite } from './Graphite';
 export { default as Vlcvideo } from './Vlcvideo';
+export { default as Machineside } from './Machineside';
+export { default as Middlebox } from './Middlebox';

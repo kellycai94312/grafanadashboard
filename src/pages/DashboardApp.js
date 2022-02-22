@@ -22,7 +22,7 @@ export default function DashboardApp() {
       .then((data) => {
         const txt = data[0].datapoints.map((item, index) => {
           let temp = '';
-          if (index < process.env.REACT_APP_LIMIT_DEV) temp = `[ ${item[0]} , ${item[1]} ] \n\r`;
+          if (index < 10) temp = `[ ${item[0]} , ${item[1]} ] \n\r`;
           return temp;
         });
         setGraphite('');
