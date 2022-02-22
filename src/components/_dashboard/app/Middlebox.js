@@ -1,20 +1,24 @@
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography, Divider, Grid, Button } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import { Typography, Divider, Grid, Button } from '@mui/material';
 // ----------------------------------------------------------------------
+import Logo from '../../Logo';
 
-const RootStyle = styled(Card)(({ theme }) => ({
+const RootStyle = styled('div')(({ theme }) => ({
   boxShadow: 'none',
   textAlign: 'center',
-  padding: theme.spacing(5, 0),
-  color: theme.palette.grey.darker,
-  backgroundColor: theme.palette.action.selected
+  border: '10px',
+  borderColor: grey[500],
+  borderStyle: 'solid',
+  padding: 0,
+  backgroundColor: grey[800]
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
   margin: 'auto',
   display: 'flex',
-  borderRadius: '50%',
+  borderRadius: '2px',
   alignItems: 'center',
   width: theme.spacing(8),
   height: theme.spacing(8),
@@ -31,34 +35,27 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 export default function Middlebox(props) {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: 'black' }}>
+      <Grid item xs padding={3}>
+        <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: grey[300] }}>
           {props.machinename}
         </Typography>
-      </IconWrapperStyle>
+      </Grid>
+      <Divider flexItem sx={{ borderRightWidth: 2 }} />
+      <Grid item xs padding={3}>
+        <Logo sx={{ margin: 'auto' }} />
+      </Grid>
+      <Divider flexItem sx={{ borderRightWidth: 2 }} />
       <Grid container>
-        <Grid item xs>
-          <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: 'black' }}>
+        <Grid item xs padding={3}>
+          <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: grey[300] }}>
             A
           </Typography>
         </Grid>
-        <Divider orientation="vertical" flexItem />
-        <Grid item xs>
-          <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: 'black' }}>
+        <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 2 }} />
+        <Grid item xs padding={3}>
+          <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: grey[300] }}>
             B
           </Typography>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs sx={{ p: 1 }}>
-          <Button variant="contained" color="error" fullWidth>
-            Stop
-          </Button>
-        </Grid>
-        <Grid item xs sx={{ p: 1 }}>
-          <Button variant="contained" color="error" fullWidth>
-            Stop
-          </Button>
         </Grid>
       </Grid>
     </RootStyle>

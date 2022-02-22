@@ -1,9 +1,12 @@
-import { Card, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 export default function Vlcvideo(props) {
   return (
-    <Card sx={{ mb: 1 }}>
-      <Typography>Video Player here</Typography>
-    </Card>
+    <Box item margin={1} sx={{ height: '200px', backgroundColor: '#FFFFFF' }}>
+      <video width="100%" height="100%">
+        <source src={props.url} />
+        <track kind="captions" label="video" />
+      </video>
+    </Box>
   );
 }

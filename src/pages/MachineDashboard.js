@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography, Divider, Button } from '@mui/material';
+// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { grey, green, red } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import { Grafana, Machineside, Middlebox, Vlcvideo } from '../components/_dashboard/app';
@@ -10,9 +12,11 @@ import { Grafana, Machineside, Middlebox, Vlcvideo } from '../components/_dashbo
 export default function MachineDashboard() {
   // const [count, setCount] = useState(0);
   // const [graphite, setGraphite] = useState([]);
+  const [chartAOpen, setChartAOpen] = useState(true);
+  const [chartBOpen, setChartBOpen] = useState(true);
   const [searchParams] = useSearchParams();
-  const [machineName] = useState(searchParams.get("machine_name") || "Missing");
-  const [machineSerial] = useState(searchParams.get("machine_serial") || "Missing");
+  const [machineName] = useState(searchParams.get('machine_name') || 'Missing');
+  const [machineSerial] = useState(searchParams.get('machine_serial') || 'Missing');
 
   /*
   This function will replace placeholders in a string with values from the .env file `process.env` and query parameters like `machineSerial`.
@@ -23,10 +27,10 @@ export default function MachineDashboard() {
     const configValues = {
       ...process.env,
       machineName,
-      machineSerial,
+      machineSerial
     };
-    return str.replace(/\{{(.*?)}}/g, (_,g)=> configValues[g] || "undefined");
-  }
+    return str.replace(/\{{(.*?)}}/g, (_, g) => configValues[g] || 'undefined');
+  };
 
   /*
    const fetchGraphiteData = () =>
@@ -44,79 +48,163 @@ export default function MachineDashboard() {
 //       });
 */
 
+  const expandCollapseAChart = () => {
+    setChartAOpen(!chartAOpen);
+  };
+  const expandCollapseBChart = () => {
+    setChartBOpen(!chartBOpen);
+  };
   return (
     <Page title="Machine Dashboard">
       <Container maxWidth="xl">
-        <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">
+        <Box sx={{ p: 1 }}>
+          <Typography variant="h4" align="center" sx={{ color: '#FFFFFF' }}>
             Machine {machineName} ( {machineSerial} ) Dashboard
           </Typography>
         </Box>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12} lg={6}>
+        <Grid container>
+          <Grid item xs>
             <Machineside
               packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_A_DEV)}
               packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_A_DEV)}
-              accumulationfill={injectConfigVars(process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_DEV)}
+              accumulationfill={injectConfigVars(
+                process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_DEV
+              )}
             />
           </Grid>
-          <Grid item xs={12} md={12} lg={6}>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderRightWidth: 5,
+              borderColor: grey[800]
+            }}
+          />
+          <Grid item xs>
             <Machineside
               packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_B_DEV)}
               packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_B_DEV)}
-              accumulationfill={injectConfigVars(process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_DEV)}
+              accumulationfill={injectConfigVars(
+                process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_DEV
+              )}
             />
           </Grid>
         </Grid>
       </Container>
-      <Container maxWidth="xl" sx={{ pt: 2, pb: 2 }}>
+      <Container maxWidth="xl">
         <Grid container rowpacing={3} justifyContent="center" alignItems="center">
           <Grid item xs={12} md={4} sm={6}>
             <Middlebox machinename={machineName} machineserial={machineSerial} />
           </Grid>
         </Grid>
       </Container>
+
       <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12} lg={6}>
-            <Vlcvideo />
+        <Grid container>
+          <Grid item xs>
+            <Button
+              variant="contained"
+              color="error"
+              size="medium"
+              sx={{ width: '300px', marginLeft: '20px' }}
+            >
+              STOP A
+            </Button>
           </Grid>
-          <Grid item xs={12} md={12} lg={6}>
-            <Vlcvideo />
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderRightWidth: 5,
+              borderColor: grey[800]
+            }}
+          />
+          <Grid item xs textAlign="right">
+            <Button
+              variant="contained"
+              color="error"
+              size="medium"
+              sx={{ width: '300px', marginRight: '20px' }}
+            >
+              STOP B
+            </Button>
+          </Grid>
+        </Grid>
+      </Container>
+
+      <Container maxWidth="xl">
+        <Grid container>
+          <Grid item xs>
+            <Vlcvideo url={injectConfigVars(process.env.REACT_APP_VLC_URL_DEV)} />
+          </Grid>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderRightWidth: 5,
+              borderColor: grey[800]
+            }}
+          />
+          <Grid item xs>
+            <Vlcvideo url={injectConfigVars(process.env.REACT_APP_VLC_URL_DEV)} />
           </Grid>
         </Grid>
       </Container>
       <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12} lg={6}>
+        <Grid container>
+          <Grid item xs padding={1}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_A_DEV)}
+              expand={chartAOpen}
             />
-          </Grid>
-          <Grid item xs={12} md={12} lg={6}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_A_DEV)}
+              expand={chartAOpen}
             />
-          </Grid>
-          <Grid item xs={12} md={12} lg={6}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_A_DEV)}
+              expand={chartAOpen}
             />
+            <Button
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ color: grey[500], borderColor: grey[500], borderRadius: 0 }}
+              onClick={() => expandCollapseAChart()}
+            >
+              {chartAOpen ? 'Collapse A Side Charts' : 'Expand A Side Charts'}
+            </Button>
           </Grid>
-          <Grid item xs={12} md={12} lg={6}>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderRightWidth: 5,
+              borderColor: grey[800]
+            }}
+          />
+          <Grid item xs padding={1}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_B_DEV)}
+              expand={chartBOpen}
             />
-          </Grid>
-          <Grid item xs={12} md={12} lg={6}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_B_DEV)}
+              expand={chartBOpen}
             />
-          </Grid>
-          <Grid item xs={12} md={12} lg={6}>
             <Grafana
               url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_B_DEV)}
+              expand={chartBOpen}
             />
+            <Button
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ color: grey[500], borderColor: grey[500], borderRadius: 0 }}
+              onClick={() => expandCollapseBChart()}
+            >
+              {chartBOpen ? 'Collapse B Side Charts' : 'Expand B Side Charts'}
+            </Button>
           </Grid>
         </Grid>
       </Container>
