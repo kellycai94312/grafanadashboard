@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import 'videojs-flash';
@@ -13,6 +14,15 @@ export default class VideoPlayer extends React.Component {
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
       console.log('onPlayerReady', this.player);
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.player && this.props.index !== nextProps.play) {
+      this.player.pause();
+    } else {
+      this.player.autoplay('muted');
+    }
+    return true;
   }
 
   // destroy player on unmount
@@ -42,3 +52,8 @@ export default class VideoPlayer extends React.Component {
     );
   }
 }
+
+VideoPlayer.propTypes = {
+  index: PropTypes.node.isRequired,
+  play: PropTypes.array
+};
