@@ -1,11 +1,12 @@
 // material
-import { alpha, styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
-import { Typography, Divider, Grid, Button } from '@mui/material';
+import { Typography, Divider, Grid } from '@mui/material';
 // ----------------------------------------------------------------------
 import Logo from '../../Logo';
 
-const RootStyle = styled('div')(({ theme }) => ({
+const RootStyle = styled('div')(() => ({
   boxShadow: 'none',
   textAlign: 'center',
   border: '10px',
@@ -13,22 +14,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   borderStyle: 'solid',
   padding: 0,
   backgroundColor: grey[800]
-}));
-
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '2px',
-  alignItems: 'center',
-  width: theme.spacing(8),
-  height: theme.spacing(8),
-  justifyContent: 'center',
-  marginBottom: theme.spacing(3),
-  color: theme.palette.info.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.info.dark, 0)} 0%, ${alpha(
-    theme.palette.info.dark,
-    0.24
-  )} 100%)`
 }));
 
 // ----------------------------------------------------------------------
@@ -61,3 +46,9 @@ export default function Middlebox(props) {
     </RootStyle>
   );
 }
+
+Middlebox.propTypes = {
+  machinename: PropTypes.node.isRequired,
+  bga: PropTypes.node.isRequired,
+  bgb: PropTypes.node.isRequired
+};

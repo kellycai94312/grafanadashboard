@@ -1,5 +1,6 @@
 // material
-import { Card } from '@mui/material';
+
+import PropTypes from 'prop-types';
 
 export default function Grafana(props) {
   if (props.expand === false) return null;
@@ -16,3 +17,8 @@ export default function Grafana(props) {
     </div>
   );
 }
+
+Grafana.propTypes = {
+  expand: PropTypes.bool,
+  url: PropTypes.node.isRequired
+};

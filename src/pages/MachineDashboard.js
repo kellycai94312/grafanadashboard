@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 // material
 import { Box, Grid, Container, Typography, Divider, Button } from '@mui/material';
 // import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { grey, green, red } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import { Grafana, Machineside, Middlebox, Vlcvideo } from '../components/_dashboard/app';

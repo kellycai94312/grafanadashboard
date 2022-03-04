@@ -1,6 +1,6 @@
 // material
-import { Card, CardHeader, Box, Typography } from '@mui/material';
-import { green, red } from '@mui/material/colors';
+import PropTypes from 'prop-types';
+import { Box, Typography } from '@mui/material';
 
 export default function Machineside(props) {
   return (
@@ -38,3 +38,9 @@ export default function Machineside(props) {
     </Box>
   );
 }
+
+Machineside.propTypes = {
+  packingspeed: PropTypes.node.isRequired,
+  accumulationfill: PropTypes.node.isRequired,
+  packingstate: PropTypes.node.isRequired
+};

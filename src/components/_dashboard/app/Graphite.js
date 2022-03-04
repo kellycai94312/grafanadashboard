@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 // material
 import { Card, CardHeader, Box } from '@mui/material';
 
@@ -12,3 +12,8 @@ export default function Graphite(props) {
     </Card>
   );
 }
+
+Graphite.propTypes = {
+  count: PropTypes.node.isRequired,
+  text: PropTypes.node.isRequired
+};
