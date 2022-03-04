@@ -11,7 +11,7 @@ export default class VideoPlayer extends React.Component {
     // instantiate Video.js
     // 这里的this.props是上级传进来的video的options
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-      console.log('onPlayerReady', this);
+      // console.log('onPlayerReady', this);
     });
   }
 

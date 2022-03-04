@@ -35,7 +35,7 @@ export default function MachineDashboard() {
   };
 
   const fetchGraphiteAData = () =>
-    fetch(`${process.env.REACT_APP_GRAPHITE_URL_A_DEV}`)
+    fetch(`${injectConfigVars(process.env.REACT_APP_DOOR_STATE_QUERY_A_DEV)}`)
       .then((response) => response.json())
       .then((data) => {
         const last = data[0].datapoints.slice(-1);
@@ -43,7 +43,7 @@ export default function MachineDashboard() {
         setSideABg(last[0][0] >= 0 ? '#54D62C' : '#FF4842');
       });
   const fetchGraphiteBData = () =>
-    fetch(`${process.env.REACT_APP_GRAPHITE_URL_B_DEV}`)
+    fetch(`${injectConfigVars(process.env.REACT_APP_DOOR_STATE_QUERY_B_DEV)}`)
       .then((response) => response.json())
       .then((data) => {
         const last = data[0].datapoints.slice(-1);
