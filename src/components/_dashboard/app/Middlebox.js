@@ -46,13 +46,13 @@ export default function Middlebox(props) {
       </Grid>
       <Divider flexItem sx={{ borderRightWidth: 2 }} />
       <Grid container>
-        <Grid item xs padding={3}>
+        <Grid item xs padding={3} sx={{ background: props.bga }}>
           <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: grey[300] }}>
             A
           </Typography>
         </Grid>
         <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 2 }} />
-        <Grid item xs padding={3}>
+        <Grid item xs padding={3} sx={{ background: props.bgb }}>
           <Typography variant="h2" sx={{ fontWeight: 'fontWeightBold', color: grey[300] }}>
             B
           </Typography>

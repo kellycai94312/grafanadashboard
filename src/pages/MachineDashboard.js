@@ -12,6 +12,8 @@ import { Grafana, Machineside, Middlebox, Vlcvideo } from '../components/_dashbo
 export default function MachineDashboard() {
   // const [count, setCount] = useState(0);
   // const [graphite, setGraphite] = useState([]);
+  const [sideABg, setSideABg] = useState('');
+  const [sideBBg, setSideBBg] = useState('');
   const [chartAOpen, setChartAOpen] = useState(true);
   const [chartBOpen, setChartBOpen] = useState(true);
   const [searchParams] = useSearchParams();
@@ -32,22 +34,29 @@ export default function MachineDashboard() {
     return str.replace(/\{{(.*?)}}/g, (_, g) => configValues[g] || 'undefined');
   };
 
-  /*
-   const fetchGraphiteData = () =>
-//     fetch(`${process.env.REACT_APP_GRAPHITE_URL_DEV}`)
-//       .then((response) => response.json())
-//       .then((data) => {
-//         const txt = data[0].datapoints.map((item, index) => {
-//           let temp = '';
-//           if (index < 10) temp = `[ ${item[0]} , ${item[1]} ] \n\r`;
-//           return temp;
-//         });
-//         setGraphite('');
-//         setCount(0);
-//         setGraphite((graphite) => txt);
-//       });
-*/
-
+  const fetchGraphiteAData = () =>
+    fetch(`${process.env.REACT_APP_GRAPHITE_URL_A_DEV}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const last = data[0].datapoints.slice(-1);
+        // console.log(last[0][0]);
+        setSideABg(last[0][0] >= 0 ? '#54D62C' : '#FF4842');
+      });
+  const fetchGraphiteBData = () =>
+    fetch(`${process.env.REACT_APP_GRAPHITE_URL_B_DEV}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const last = data[0].datapoints.slice(-1);
+        // console.log(last[0][0]);
+        setSideBBg(last[0][0] >= 0 ? '#54D62C' : '#FF4842');
+      });
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchGraphiteAData();
+      fetchGraphiteBData();
+    }, process.env.REACT_APP_DURATION_DEV);
+    return () => clearInterval(timer);
+  }, []);
   const expandCollapseAChart = () => {
     setChartAOpen(!chartAOpen);
   };
@@ -94,7 +103,12 @@ export default function MachineDashboard() {
       <Container maxWidth="xl">
         <Grid container rowpacing={3} justifyContent="center" alignItems="center">
           <Grid item xs={12} md={4} sm={6}>
-            <Middlebox machinename={machineName} machineserial={machineSerial} />
+            <Middlebox
+              machinename={machineName}
+              machineserial={machineSerial}
+              bga={sideABg}
+              bgb={sideBBg}
+            />
           </Grid>
         </Grid>
       </Container>
