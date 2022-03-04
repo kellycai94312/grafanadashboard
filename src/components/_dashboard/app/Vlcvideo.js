@@ -3,7 +3,7 @@ import Videoplayer from './Videoplayer';
 import testvideo from '../../../_mocks_/testvideo.mp4';
 // import testvideourl from '../../../_mocks_/video';
 export default function Vlcvideo(props) {
-  const rtmpurl = 'rtmp://localhost:1935/vod/file_example_MP4_480_1_5MG.mp4';
+  const rtmpurl = props.url; //'rtmp://localhost:1935/vod/file_example_MP4_480_1_5MG.mp4';
   const videoJsOptions = {
     autoplay: true,
     preload: 'auto',

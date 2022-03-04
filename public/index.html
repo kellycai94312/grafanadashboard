@@ -29,6 +29,21 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+
+  <script>
+    // find all iframes and try to update inner CSS
+    var delayInMilliseconds = 5000;
+    function transparentIframes() {
+      for (const iframe of document.getElementsByTagName('iframe')) {
+        const y = (iframe.contentWindow || iframe.contentDocument);
+        const doc = (y.document || y);
+        doc.body.style.backgroundColor = 'transparent';
+      }
+      setTimeout(transparentIframes, delayInMilliseconds);        
+    }
+    transparentIframes();
+    </script>
+
 </body>
 
 </html>

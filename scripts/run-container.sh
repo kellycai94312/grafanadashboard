@@ -1,9 +1,6 @@
 #!/bin/bash
 set -xe
 
-# jump to the directory containing this file
-pushd "$(dirname "$0")"
-
 # assign an input if this is not run in the build pipeline
 [ -n "$CI_BUILD_TOKEN" ] && interactive="false" || interactive="true"
 
