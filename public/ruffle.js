@@ -1,4 +1,4 @@
-/**
+/*
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/@ruffle-rs/ruffle@0.1.0-nightly.2022.3.3/ruffle.js
  *

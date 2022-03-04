@@ -35,7 +35,13 @@ export default function MachineDashboard() {
   };
 
   const fetchGraphiteAData = () =>
-    fetch(`${process.env.REACT_APP_GRAPHITE_URL_A_DEV}`)
+    fetch(
+      `${
+        process.env.REACT_APP_RUN_MODE === 'dev'
+          ? process.env.REACT_APP_GRAPHITE_URL_A_DEV
+          : process.env.REACT_APP_GRAPHITE_URL_A_PROD
+      }`
+    )
       .then((response) => response.json())
       .then((data) => {
         const last = data[0].datapoints.slice(-1);
@@ -43,7 +49,13 @@ export default function MachineDashboard() {
         setSideABg(last[0][0] >= 0 ? '#54D62C' : '#FF4842');
       });
   const fetchGraphiteBData = () =>
-    fetch(`${process.env.REACT_APP_GRAPHITE_URL_B_DEV}`)
+    fetch(
+      `${
+        process.env.REACT_APP_RUN_MODE === 'dev'
+          ? process.env.REACT_APP_GRAPHITE_URL_B_DEV
+          : process.env.REACT_APP_GRAPHITE_URL_B_PROD
+      }`
+    )
       .then((response) => response.json())
       .then((data) => {
         const last = data[0].datapoints.slice(-1);
@@ -51,10 +63,15 @@ export default function MachineDashboard() {
         setSideBBg(last[0][0] >= 0 ? '#54D62C' : '#FF4842');
       });
   useEffect(() => {
-    const timer = setInterval(() => {
-      fetchGraphiteAData();
-      fetchGraphiteBData();
-    }, process.env.REACT_APP_DURATION_DEV);
+    const timer = setInterval(
+      () => {
+        fetchGraphiteAData();
+        fetchGraphiteBData();
+      },
+      process.env.REACT_APP_RUN_MODE === 'dev'
+        ? process.env.REACT_APP_DURATION_DEV
+        : process.env.REACT_APP_DURATION_PROD
+    );
     return () => clearInterval(timer);
   }, []);
   const expandCollapseAChart = () => {
@@ -74,10 +91,20 @@ export default function MachineDashboard() {
         <Grid container>
           <Grid item xs>
             <Machineside
-              packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_A_DEV)}
-              packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_A_DEV)}
+              packingstate={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_A_PROD
+              )}
+              packingspeed={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_A_PROD
+              )}
               accumulationfill={injectConfigVars(
-                process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_DEV
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_A_PROD
               )}
             />
           </Grid>
@@ -91,10 +118,20 @@ export default function MachineDashboard() {
           />
           <Grid item xs>
             <Machineside
-              packingstate={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_B_DEV)}
-              packingspeed={injectConfigVars(process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_B_DEV)}
+              packingstate={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_PACKING_STATE_SIDE_B_PROD
+              )}
+              packingspeed={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_PACKING_SPEED_SIDE_B_PROD
+              )}
               accumulationfill={injectConfigVars(
-                process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_DEV
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_ACCUMULATION_FILL_SIDE_B_PROD
               )}
             />
           </Grid>
@@ -149,7 +186,13 @@ export default function MachineDashboard() {
       <Container maxWidth="xl">
         <Grid container>
           <Grid item xs>
-            <Vlcvideo url={injectConfigVars(process.env.REACT_APP_VLC_URL_DEV)} />
+            <Vlcvideo
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_VLC_URL_DEV
+                  : process.env.REACT_APP_VLC_URL_PROD
+              )}
+            />
           </Grid>
           <Divider
             orientation="vertical"
@@ -160,7 +203,13 @@ export default function MachineDashboard() {
             }}
           />
           <Grid item xs>
-            <Vlcvideo url={injectConfigVars(process.env.REACT_APP_VLC_URL_DEV)} />
+            <Vlcvideo
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_VLC_URL_DEV
+                  : process.env.REACT_APP_VLC_URL_PROD
+              )}
+            />
           </Grid>
         </Grid>
       </Container>
@@ -168,15 +217,27 @@ export default function MachineDashboard() {
         <Grid container>
           <Grid item xs padding={1}>
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_A_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART1_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_CHART1_SIDE_A_PROD
+              )}
               expand={chartAOpen}
             />
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_A_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART2_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_CHART2_SIDE_A_PROD
+              )}
               expand={chartAOpen}
             />
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_A_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART3_SIDE_A_DEV
+                  : process.env.REACT_APP_PANEL_CHART3_SIDE_A_PROD
+              )}
               expand={chartAOpen}
             />
             <Button
@@ -199,15 +260,27 @@ export default function MachineDashboard() {
           />
           <Grid item xs padding={1}>
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART1_SIDE_B_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART1_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_CHART1_SIDE_B_PROD
+              )}
               expand={chartBOpen}
             />
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART2_SIDE_B_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART2_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_CHART2_SIDE_B_PROD
+              )}
               expand={chartBOpen}
             />
             <Grafana
-              url={injectConfigVars(process.env.REACT_APP_PANEL_CHART3_SIDE_B_DEV)}
+              url={injectConfigVars(
+                process.env.REACT_APP_RUN_MODE === 'dev'
+                  ? process.env.REACT_APP_PANEL_CHART3_SIDE_B_DEV
+                  : process.env.REACT_APP_PANEL_CHART3_SIDE_B_PROD
+              )}
               expand={chartBOpen}
             />
             <Button
