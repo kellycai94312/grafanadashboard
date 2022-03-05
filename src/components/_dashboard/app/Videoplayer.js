@@ -55,5 +55,5 @@ export default class VideoPlayer extends React.Component {
 
 VideoPlayer.propTypes = {
   index: PropTypes.node.isRequired,
-  play: PropTypes.array
+  play: PropTypes.node.isRequired
 };
