@@ -4,13 +4,14 @@ import { useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import Videoplayer from './Videoplayer';
-import testvideo from '../../../_mocks_/testvideo.mp4';
+// import testvideo from '../../../_mocks_/testvideo.mp4';
 // import testvideourl from '../../../_mocks_/video';
-export default function Vlcvideo() {
-  // const rtmpurl = props.url; // 'rtmp://localhost:1935/vod/file_example_MP4_480_1_5MG.mp4';
+export default function Vlcvideo(props) {
+  const rtmpurl = props.url; // 'rtmp://localhost:1935/vod/file_example_MP4_480_1_5MG.mp4';
+  console.log("rtmp",rtmpurl);
   const [autoplay, setAutoplay] = useState(0);
   const videoJsOptions = {
-    autoplay: true,
+    autoplay: false,
     preload: 'auto',
     responsive: true,
     // width: '100,
@@ -21,7 +22,7 @@ export default function Vlcvideo() {
     fluid: true,
     sources: [
       {
-        src: testvideo,
+        src: rtmpurl,
         type: 'video/mp4'
       }
     ]
