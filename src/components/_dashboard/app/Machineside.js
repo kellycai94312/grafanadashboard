@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 export default function Machineside(props) {
   return (
     <Box sx={{ p: 3, pb: 1 }} minHeight="100px">
+      <Typography variant="h6" align="center" sx={{ color: '#FFFFFF' }}>{props.name} Side</Typography>
       <iframe
         title="side_part_1"
         src={props.packingstate}
@@ -13,7 +14,7 @@ export default function Machineside(props) {
         frameBorder="0"
         allowtransparency="true"
       />
-      <Typography variant="subtitle1" sx={{ color: '#FFFFFF' }}>
+      <Typography variant="subtitle6" sx={{ fontSize: "9pt", color: '#FFFFFF' }}>
         PACKING SPEED
       </Typography>
       <iframe
@@ -24,7 +25,7 @@ export default function Machineside(props) {
         frameBorder="0"
         allowtransparency="true"
       />
-      <Typography variant="subtitle1" sx={{ color: '#FFFFFF' }}>
+      <Typography variant="subtitle6" sx={{ fontSize: "9pt", color: '#FFFFFF' }}>
         ACCUMULATION FILL
       </Typography>
       <iframe
